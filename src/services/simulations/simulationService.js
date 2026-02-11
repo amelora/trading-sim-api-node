@@ -1,5 +1,6 @@
 const Simulation = require("../../models/Simulation")
 const HttpError = require("../../utils/httpError")
+const { isValidObjectId } = require("../../utils/objectId")
 
 const normalize = (s) => String(s || "").trim().toLowerCase()
 
@@ -32,6 +33,7 @@ const create = async ({ strategy, params }) => {
 }
 
 const getById = async (id) => {
+  if (!isValidObjectId(id)) throw new HttpError(400, "VALIDATION_ERROR", "Invalid simulation id")
   const doc = await Simulation.findById(id)
   if (!doc) throw new HttpError(404, "NOT_FOUND", "Simulation not found")
   return doc

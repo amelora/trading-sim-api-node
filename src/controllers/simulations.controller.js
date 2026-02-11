@@ -1,4 +1,5 @@
 const simulationService = require("../services/simulations/simulationService")
+const runSimulationService = require("../services/simulations/runSimulation")
 const HttpError = require("../utils/httpError")
 
 module.exports = {
@@ -50,7 +51,20 @@ module.exports = {
 
   runSimulation: async (req, res, next) => {
     try {
-      res.status(501).json({ error: { message: "Not implemented", code: "NOT_IMPLEMENTED" } })
+      const { id } = req.params
+      if (!id) throw new HttpError(400, "VALIDATION_ERROR", "id is required")
+
+      const doc = await runSimulationService(id)
+
+      res.json({
+        data: {
+          id: doc._id,
+          status: doc.status,
+          result: doc.result,
+          error: doc.error,
+          updatedAt: doc.updatedAt
+        }
+      })
     } catch (err) {
       next(err)
     }
