@@ -10,8 +10,8 @@ const start = async () => {
 
     const app = createApp()
 
-    app.listen(env.port, () => {
-      console.log(`[server] listening on port ${env.port}`)
+    app.listen(env.port, env.host, () => {
+        console.log(`[server] listening on http://${env.host}:${env.port}`)
     })
   } catch (err) {
     console.error("[server] failed to start", err)
