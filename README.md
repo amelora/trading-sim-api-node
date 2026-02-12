@@ -58,29 +58,31 @@ The primary focus of this project is backend architecture and algorithmic logic.
 
 Install dependencies:
 
+```
 npm install
-
+```
 Run in development mode:
 
+```
 npm run dev
-
+```
 Run in production mode:
 
+```
 npm start
-
+```
 ---
 
 ## Environment Variables
 
 Example configuration:
 
-```
+```env
 HOST=127.0.0.1
 PORT=8081
 MONGODB_URI=mongodb://127.0.0.1:27017/trading-sim
 CACHE_ENABLED=true
 COINGECKO_BASE_URL=https://api.coingecko.com/api/v3
-
 COINGECKO_TIMEOUT_MS=5000
 ```
 ---
