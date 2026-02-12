@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Trading Sim API - Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <div>
+          <h1>Trading Strategy Simulator</h1>
+          <p class="muted">Grid strategy (simulation only) • CoinGecko market history • MongoDB persistence</p>
+        </div>
+        <div class="pill">Backend Demo UI</div>
+      </header>
+
+      <section class="card">
+        <h2>Run a simulation</h2>
+
+        <div class="grid">
+          <label>
+            Coin
+            <select id="coinId">
+              <option value="bitcoin">bitcoin</option>
+              <option value="ethereum">ethereum</option>
+              <option value="solana">solana</option>
+              <option value="cardano">cardano</option>
+            </select>
+          </label>
+
+          <label>
+            Currency
+            <select id="vsCurrency">
+              <option value="usd">usd</option>
+              <option value="cad">cad</option>
+              <option value="eur">eur</option>
+            </select>
+          </label>
+
+          <label>
+            Days
+            <input id="days" type="number" min="1" max="3650" value="30" />
+          </label>
+
+          <label>
+            Interval
+            <select id="interval">
+              <option value="daily">daily</option>
+              <option value="hourly">hourly</option>
+            </select>
+          </label>
+
+          <label>
+            Initial cash
+            <input id="initialCash" type="number" min="1" step="1" value="1000" />
+          </label>
+
+          <label>
+            Grid levels
+            <input id="gridLevels" type="number" min="1" max="50" value="10" />
+          </label>
+
+          <label>
+            Grid spacing (%)
+            <input id="gridSpacingPct" type="number" min="0.1" step="0.1" value="1" />
+          </label>
+
+          <label>
+            Order size (%)
+            <input id="orderSizePct" type="number" min="1" max="100" step="1" value="10" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="btnRun" class="btn primary">Create & Run</button>
+          <button id="btnReset" class="btn">Reset</button>
+        </div>
+
+        <div id="status" class="status muted"></div>
+      </section>
+
+      <section class="card">
+        <h2>Result</h2>
+
+        <div id="result" class="result">
+          <div class="muted">No result yet. Run a simulation.</div>
+        </div>
+      </section>
+
+      <footer class="footer muted">
+        Tip: this UI is intentionally minimal. The focus is backend architecture and strategy logic.
+      </footer>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
