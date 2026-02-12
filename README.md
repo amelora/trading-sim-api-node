@@ -50,7 +50,7 @@ The primary focus of this project is backend architecture and algorithmic logic.
 
 ## Screenshot
 
-![Demo UI](doc/Screenshot.jpg)
+![Demo UI](docs/Screenshot.jpg)
 
 ---
 
