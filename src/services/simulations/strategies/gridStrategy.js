@@ -1,4 +1,23 @@
 const round2 = (n) => Math.round(n * 100) / 100
+const round4 = (n) => Math.round(n * 10000) / 10000
+
+const calcMaxDrawdownPct = (equity) => {
+  let peak = -Infinity
+  let maxDd = 0
+
+  for (const p of equity) {
+    const v = p.value
+    if (v > peak) peak = v
+
+    if (peak > 0) {
+      const dd = (peak - v) / peak
+      if (dd > maxDd) maxDd = dd
+    }
+  }
+
+  return round4(maxDd * 100)
+}
+
 
 const buildGrid = ({ startPrice, levels, spacingPct }) => {
   const spacing = spacingPct / 100
@@ -35,7 +54,10 @@ const runGridStrategy = ({ prices, initialCash, gridLevels, gridSpacingPct, orde
 
   let cash = initialCash
   let holdingsQty = 0
-
+  let sellCount = 0
+  let winCount = 0
+  let grossProfit = 0
+  let grossLoss = 0
   const trades = []
   const equity = []
 
@@ -83,12 +105,24 @@ const runGridStrategy = ({ prices, initialCash, gridLevels, gridSpacingPct, orde
       cash += proceeds
       holdingsQty -= qty
 
+      const entryPrice = level.entryPrice
+      const pnl = (price - entryPrice) * qty
+
+      sellCount += 1
+      if (pnl > 0) {
+        winCount += 1
+        grossProfit += pnl
+      } else if (pnl < 0) {
+        grossLoss += Math.abs(pnl)
+      }
+
       trades.push({
         type: "sell",
         level: level.level,
         timestampMs: point.timestampMs,
         price: round2(price),
-        qty
+        qty,
+        pnl: round2(pnl)
       })
 
       level.hasPosition = false
@@ -108,13 +142,23 @@ const runGridStrategy = ({ prices, initialCash, gridLevels, gridSpacingPct, orde
   const lastPrice = prices[prices.length - 1].price
   const finalValue = cash + holdingsQty * lastPrice
   const profit = finalValue - initialCash
+  const roiPct = (profit / initialCash) * 100
+  const maxDrawdownPct = calcMaxDrawdownPct(equity)
+  const winRatePct = sellCount > 0 ? (winCount / sellCount) * 100 : 0
+  const profitFactor = grossLoss > 0 ? grossProfit / grossLoss : (grossProfit > 0 ? Infinity : 0)
 
   return {
     summary: {
       initialCash,
       finalValue: round2(finalValue),
       profit: round2(profit),
-      trades: trades.length
+      roiPct: round2(roiPct),
+      trades: trades.length,
+
+      sells: sellCount,
+      winRatePct: round2(winRatePct),
+      profitFactor: Number.isFinite(profitFactor) ? round2(profitFactor) : profitFactor,
+      maxDrawdownPct
     },
     trades,
     equity
