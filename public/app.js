@@ -150,5 +150,22 @@ const reset = () => {
 
 $("btnRun").addEventListener("click", run)
 $("btnReset").addEventListener("click", reset)
+$("btnConservative").addEventListener("click", () => applyPreset("conservative"))
+$("btnAggressive").addEventListener("click", () => applyPreset("aggressive"))
 
 reset()
+
+const applyPreset = (name) => {
+  if (name === "conservative") {
+    $("gridLevels").value = 6
+    $("gridSpacingPct").value = 1.5
+    $("orderSizePct").value = 8
+    return
+  }
+
+  if (name === "aggressive") {
+    $("gridLevels").value = 14
+    $("gridSpacingPct").value = 0.8
+    $("orderSizePct").value = 12
+  }
+}
