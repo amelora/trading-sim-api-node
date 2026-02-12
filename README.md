@@ -29,7 +29,7 @@ This repository includes a minimal demo interface to make the API easy to test w
 
 Once the server is running:
 
-http://localhost:8081/
+`http://localhost:8081/`
 
 
 (or your configured HOST and PORT)
