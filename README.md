@@ -73,6 +73,22 @@ npm start
 ```
 ---
 
+## Run with Docker
+
+### Start API + MongoDB
+docker compose up --build
+
+API:
+http://localhost:8081/
+
+### Stop
+docker compose down
+
+### Reset database (optional)
+docker compose down -v
+
+--
+
 ## Environment Variables
 
 Example configuration:
