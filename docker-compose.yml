@@ -1,0 +1,26 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8081:3000"
+    environment:
+      NODE_ENV: "production"
+      HOST: "0.0.0.0"
+      PORT: "3000"
+      MONGODB_URI: "mongodb://mongo:27017/trading_sim"
+      COINGECKO_BASE_URL: "https://api.coingecko.com/api/v3"
+      COINGECKO_TIMEOUT_MS: "5000"
+      CACHE_ENABLED: "true"
+    depends_on:
+      mongo:
+        condition: service_started
+
+  mongo:
+    image: mongo:7
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+  
