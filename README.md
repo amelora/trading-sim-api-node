@@ -87,7 +87,7 @@ docker compose down
 ### Reset database (optional)
 docker compose down -v
 
---
+---
 
 ## Environment Variables
 
